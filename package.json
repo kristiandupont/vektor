@@ -1,0 +1,27 @@
+{
+  "name": "vektor",
+  "version": "1.0.0",
+  "main": "src/electron-starter.js",
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "electron": "^2.0.3",
+    "mobx": "^5.0.2",
+    "mobx-react": "^5.2.3",
+    "ramda": "^0.25.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-json-view": "^1.17.0",
+    "react-monaco-editor": "^0.17.1",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "go": "yarn start && yarn electron"
+  }
+}

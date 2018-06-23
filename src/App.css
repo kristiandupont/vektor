@@ -1,0 +1,75 @@
+.canvas {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+}
+
+.box {
+  position: absolute;
+  width: 320px;
+  height: 200px;
+  margin: 10px 0 0 10px;
+  padding: 5px;
+  -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.5);
+  box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.5);
+  border: 1px solid #d0d0d0;
+  overflow: auto;
+  resize: both;
+  background-color: white;
+}
+
+.box.drag {
+  margin: 8px 0 0 8px;
+  -webkit-box-shadow: 10px 410x 10px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.1);
+  box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.1);
+}
+
+.box .header {
+  width: 100%;
+  background-color: #f0f0f0;
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.box .edit-button {
+  z-index: 101;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.edit-window {
+  position: absolute;
+  top: 5px; bottom: 5px; left: 5px; right: 5px;
+  border: 1px solid #909090;
+  z-index: 1000;
+  background-color: white;
+}
+
+.edit-window .close-button {
+  z-index: 1001;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.editor-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.editor-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+}
