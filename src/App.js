@@ -5,6 +5,9 @@ import MonacoEditor from 'react-monaco-editor';
 import { View } from './view';
 import './App.css';
 
+const fs = window.electron.remote.require('fs');
+const ipcRenderer = window.electron.ipcRenderer;
+
 const context = {
   watches: {
     'primary': {
@@ -38,6 +41,10 @@ const context = {
 };
 
 window.context = context;
+
+ipcRenderer.on('requestSave', function (event, arg) {
+  ipcRenderer.send('save', { filename: arg, context });
+})
 
 function evaluate () {
   R.forEachObjIndexed((value, key) => {
@@ -179,8 +186,23 @@ class App extends Component {
     });
   }
 
-  evaluate() {
+  addNode() {
     console.log('!');
+    const watchCount = R.keys(context.watches).length;
+    const key = `node-${watchCount + 1}`;
+    context.watches[key] = {
+      code: '({ initialized: true })',
+      func: undefined,
+      lastEval: undefined,
+      dependencies: [],
+      view: {
+        header: key,
+        x: watchCount * 300,
+        y: 10,
+        width: 300,
+        height: 200
+      }
+    };
     evaluate();
     this.forceUpdate();
   }
@@ -192,7 +214,7 @@ class App extends Component {
           <EditWindow context={context} watch={this.state.edit} onClose={this.closeEditWindow} />
         }
         <div className="canvas" style={{ zoom: this.state.zoom }} onWheel={this.zoom}>
-          {/* <button onClick={this.evaluate.bind(this)} >Evaluate</button> */}
+          <button onClick={this.addNode.bind(this)} >+</button>
           { R.keys(context.watches).map(key => {
             return <View context={context} watch={key} onEdit={this.editWatch} />;
           })}
