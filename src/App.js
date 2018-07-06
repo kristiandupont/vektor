@@ -8,7 +8,7 @@ import './App.css';
 const fs = window.electron.remote.require('fs');
 const ipcRenderer = window.electron.ipcRenderer;
 
-const context = {
+let context = {
   watches: {
     'primary': {
       code: '({x: 42, y: 32})',
@@ -44,6 +44,10 @@ window.context = context;
 
 ipcRenderer.on('requestSave', function (event, arg) {
   ipcRenderer.send('save', { filename: arg, context });
+})
+
+ipcRenderer.on('load', function (event, arg) {
+  context = JSON.parse(arg);
 })
 
 function evaluate () {

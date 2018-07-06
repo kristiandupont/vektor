@@ -15,6 +15,31 @@ const menu = require('./menu');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+function save() {
+  dialog.showSaveDialog({
+    title: 'Save Vector Sheet',
+    filters: [
+      { name: 'Vector Sheet', extensions: ['vecsheet'] }
+    ]
+  }, function (filename) {
+    console.log('SAVING: ', filename);
+    mainWindow.webContents.send('requestSave', filename);
+  });
+}
+
+function open() {
+  dialog.showOpenDialog({
+    title: 'Load Vector Sheet',
+    filters: [
+      { name: 'Vector Sheet', extensions: ['vecsheet'] }
+    ]
+  }, function (filenames) {
+    console.log('LOADING: ', filenames);
+    const contents = fs.readFileSync(filenames[0], 'utf8');
+    mainWindow.webContents.send('load', contents);
+  });
+}
+
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({ width: 800, height: 600 });
@@ -33,17 +58,7 @@ function createWindow() {
     mainWindow = null
   })
 
-  menu.setApplicationMenu({save: () => {
-    dialog.showSaveDialog({
-      title: 'Save Vector Sheet',
-      filters: [
-        { name: 'Vector Sheet', extensions: ['vecsheet']}
-      ]
-    }, function (filename) {
-      console.log('SAVING: ', filename);
-      mainWindow.webContents.send('requestSave', filename);
-    });
-  }});
+  menu.setApplicationMenu({save, open});
 
   ipcMain.on('save', function (event, arg) {
     fs.writeFileSync(arg.filename, JSON.stringify(arg.context, null, 2), 'utf8');
