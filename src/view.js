@@ -74,4 +74,4 @@ class View extends Component {
   }
 }
 
-export { View };
+export default View;
