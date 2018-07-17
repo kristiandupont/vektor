@@ -2,7 +2,8 @@ import * as R from 'ramda';
 import React, { Component } from 'react';
 import ReactJson from 'react-json-view';
 import MonacoEditor from 'react-monaco-editor';
-import context, { evaluate } from './context';
+import { evaluate } from './context';
+import './EditWindow.css';
 
 function debounce(func, wait, immediate) {
   var timeout;
@@ -78,7 +79,9 @@ class EditWindow extends Component {
 
     return (
       <div className="edit-window">
-        <div className="close-button" onClick={this.onClose.bind(this)}>X</div>
+        <input type="text" placeholder="name" />
+        <input type="text" placeholder="dependencies" />
+        <div className="close-button" onClick={this.onClose.bind(this)}><i className="fa fa-times-circle"></i></div>
         <div className="editor-left">
           <MonacoEditor
             language="javascript"
