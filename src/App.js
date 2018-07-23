@@ -3,30 +3,7 @@ import React, { Component } from 'react';
 import View from './view';
 import EditWindow from './EditWindow';
 import './App.css';
-import context, { evaluate } from './context';
-
-const fs = window.electron.remote.require('fs');
-const ipcRenderer = window.electron.ipcRenderer;
-
-const trackedComponents = [];
-
-function trackComponent(component) {
-  component.setState({ context });
-  trackedComponents.push(component);
-}
-
-function untrackComponent(component) {
-  trackedComponents.splice(this.trackedComponents.indexOf(component), 1);
-}
-
-ipcRenderer.on('requestSave', function (event, arg) {
-  ipcRenderer.send('save', { filename: arg, context });
-})
-
-ipcRenderer.on('load', function (event, arg) {
-  context = JSON.parse(arg);
-  trackedComponents.forEach(component => component.setState({ context }));
-})
+import context, { evaluate, trackComponent, untrackComponent } from './context';
 
 class App extends Component {
   constructor(props) {

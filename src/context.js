@@ -1,10 +1,32 @@
 import * as R from 'ramda';
 
-const context = {
+const ipcRenderer = window.electron.ipcRenderer;
+
+let context = {
   watches: { }
 };
 
 window.context = context;
+ipcRenderer.on('requestSave', function (event, arg) {
+  ipcRenderer.send('save', { filename: arg, context });
+})
+
+ipcRenderer.on('load', function (event, arg) {
+  context = JSON.parse(arg);
+  trackedComponents.forEach(component => component.setState({ context }));
+})
+
+
+const trackedComponents = [];
+
+export function trackComponent(component) {
+  component.setState({ context });
+  trackedComponents.push(component);
+}
+
+export function untrackComponent(component) {
+  trackedComponents.splice(this.trackedComponents.indexOf(component), 1);
+}
 
 export default context;
 

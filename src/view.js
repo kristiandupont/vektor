@@ -66,7 +66,7 @@ class View extends Component {
           {watch.view.header}
         </div>
         <div className="edit-button" onMouseDown={this.onEdit.bind(this)}>
-          *
+          <i className="fa fa-edit"></i>
         </div>
           <ReactJson src={watch.lastEval} />
       </div>
